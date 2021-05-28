@@ -14,7 +14,6 @@ from dash.dependencies import Input, Output, ALL
 
 _COMPONENT_ID_TYPE = "url_helper"
 
-
 """
 definition: {id_inner: {property: your_value}}
 NOTE here we use id_inner, NOT the real id (which is a dict)
@@ -55,7 +54,10 @@ def _parse_url_to_state(href: str) -> State:
             id, param = key.split(_ID_PARAM_SEP)
         else:
             id, param = key, "value"
-        state.setdefault(id, {})[param] = ast.literal_eval(value)
+        try:
+            state.setdefault(id, {})[param] = ast.literal_eval(value)
+        except SyntaxError:
+            state.setdefault(id, {})[param] = value
 
     return state
 
