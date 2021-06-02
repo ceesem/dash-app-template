@@ -34,6 +34,8 @@ def page_layout(state: State = {}):
     layout = [
         html.H1("A Basic Dash App Layout"),
         html.Hr(),
+        html.Div(id="config-output", children=""),
+        html.Hr(),
         html.Div(
             [
                 html.Div(

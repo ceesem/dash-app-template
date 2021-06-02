@@ -24,11 +24,18 @@ def register_callbacks(app, config):
     """
 
     @app.callback(
+        Output("config-output", "children"),
+        Input("config-output", "children"),
+    )
+    def config_output(_):
+        return f'Here is a parameter from the config: {config.get("VALUE")}'
+
+    @app.callback(
         Output("unsaved-output", "children"),
         Input("unsaved-input", "value"),
     )
     def unsaved_input_parameter(value):
-        return f'The unsaved value is "{value}"'
+        return f'The unsaved input value is "{value}"'
 
     @app.callback(
         Output("url-encoded-output", "children"),
