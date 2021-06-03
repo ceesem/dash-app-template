@@ -21,9 +21,9 @@ def make_client(config):
     return client
 
 
-######################################
-# register_callbacks must be defined #
-######################################
+##############################################################
+# register_callbacks must be defined with the same arguments #
+##############################################################
 
 
 def register_callbacks(app, config):
