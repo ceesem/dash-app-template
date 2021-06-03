@@ -36,6 +36,8 @@ def page_layout(state: State = {}):
         html.Hr(),
         html.Div(id="config-output", children=""),
         html.Hr(),
+        html.Div(id="client-output", children=""),
+        html.Hr(),
         html.Div(
             [
                 html.Div(
@@ -70,7 +72,7 @@ def page_layout(state: State = {}):
         html.Div(
             [
                 html.Div(
-                    'Here we are refencing a hidden input, which allows parameters to be set by the URL (in this case after "example-hidden-value") but not displayed to the user'
+                    'Here we are refencing a hidden input, which allows parameters to be set by the URL (in this case after "example-hidden-value") but not displayed to the user. This can be useful for passing configurable parameters to callbacks.'
                 ),
                 html.Div(
                     dcc.Input(

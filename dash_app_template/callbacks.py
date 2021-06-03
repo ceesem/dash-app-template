@@ -1,4 +1,6 @@
 from dash.dependencies import Input, Output
+from annotationframeworkclient import FrameworkClient
+import flask
 
 # Callbacks using data from URL-encoded parameters requires this import
 from .dash_url_helper import _COMPONENT_ID_TYPE
@@ -6,6 +8,21 @@ from .dash_url_helper import _COMPONENT_ID_TYPE
 ######################################
 # register_callbacks must be defined #
 ######################################
+
+DEFAULT_SERVER_ADDRESS = "https://global.daf-apis.com"
+DEFAULT_DATASTACK = "minnie65_phase3_v1"
+
+# This function makes a FrameworkClient that is compatible with the meta-app authentication token.
+# Note that the auth token comes from the flask global parameters if present,
+# or else is set to None and thus uses your default credentials, for example for local testing.
+def make_client(config):
+    auth_token = flask.g.get("auth_token", None)
+    datastack = config.get("DATASTACK", DEFAULT_DATASTACK)
+    server_address = config.get("SERVER_ADDRESS", DEFAULT_SERVER_ADDRESS)
+    client = FrameworkClient(
+        datastack, server_address=server_address, auth_token=auth_token
+    )
+    return client
 
 
 def register_callbacks(app, config):
@@ -29,6 +46,14 @@ def register_callbacks(app, config):
     )
     def config_output(_):
         return f'Here is a parameter from the config: {config.get("VALUE")}'
+
+    @app.callback(
+        Output("client-output", "children"),
+        Input("client-output", "children"),
+    )
+    def build_client(_):
+        client = make_client(config)
+        return f"I configured a client for the server {client.server_address}"
 
     @app.callback(
         Output("unsaved-output", "children"),
