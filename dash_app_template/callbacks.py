@@ -5,10 +5,6 @@ import flask
 # Callbacks using data from URL-encoded parameters requires this import
 from .dash_url_helper import _COMPONENT_ID_TYPE
 
-######################################
-# register_callbacks must be defined #
-######################################
-
 DEFAULT_SERVER_ADDRESS = "https://global.daf-apis.com"
 DEFAULT_DATASTACK = "minnie65_phase3_v1"
 
@@ -23,6 +19,11 @@ def make_client(config):
         datastack, server_address=server_address, auth_token=auth_token
     )
     return client
+
+
+######################################
+# register_callbacks must be defined #
+######################################
 
 
 def register_callbacks(app, config):
